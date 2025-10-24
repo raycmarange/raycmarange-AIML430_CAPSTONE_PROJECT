@@ -18,7 +18,7 @@ This project implements a comprehensive **Financial Forecasting and Risk Analysi
 
 ## 1\. System Architecture and Data Flow
 
-Based on the provided Python code files, particularly `main.ipynb`, `data_pipeline.ipynb`, `evaluator.ipynb`, `xai_analyzer.ipynb`, and `ensemble_model.ipynb`, the system is structured as a comprehensive Financial Forecasting and Risk Analysis Pipeline for the NZX 50 index.
+Based on the provided Python code files, particularly `main.ipynb`, `data_pipeline.py`, `evaluator.py`, `xai_analyzer.py`, and `ensemble_model.py`, the system is structured as a comprehensive Financial Forecasting and Risk Analysis Pipeline for the NZX 50 index.
 
 ### 1.1. Data Flow Pipeline for Reporting
 
@@ -26,14 +26,14 @@ This pipeline illustrates the sequence of data transformation, training, evaluat
 
 | Phase | Component/Function | Input Data | Output Data | Key Operations |
 | :---: | :---: | :---: | :---: | :--- |
-| **P0: Setup** | `main.ipynb` (setup\_device, setup\_experiment\_dirs, RequirementsConfig.validate\_installation) | Configuration Files (`config.ipynb`) | Device (`cuda`/`cpu`), Log/Model/XAI Directories | Initialization, Dependency Check |
-| **P1: Data Prep** | `FinancialDataPipeline` (`data_pipeline.ipynb`) | Raw Market Tickers (`^NZ50`, `SPY`, etc.) | `forecast_data` | Fetching (yfinance), Feature Engineering (RSI, MACD, Volatility, Liquidity), Regime Detection (Stress/Normal), Time-Series Splitting |
+| **P0: Setup** | `main.ipynb` (setup\_device, setup\_experiment\_dirs, RequirementsConfig.validate\_installation) | Configuration Files (`config.py`) | Device (`cuda`/`cpu`), Log/Model/XAI Directories | Initialization, Dependency Check |
+| **P1: Data Prep** | `FinancialDataPipeline` (`data_pipeline.py`) | Raw Market Tickers (`^NZ50`, `SPY`, etc.) | `forecast_data` | Fetching (yfinance), Feature Engineering (RSI, MACD, Volatility, Liquidity), Regime Detection (Stress/Normal), Time-Series Splitting |
 | **P2: Model Setup** | `ModelConfig.create_forecasting_model_configs`, `ModelFactory.create_model`, `create_forecast_loaders` | `forecast_data`, `TrainingConfig` | `models` (PyTorch instances: Transformer, LSTM, Linear; XGBoost), `data_loaders` (Train, Val, Test) | Model Initialization, Hyperparameter Configuration, Data Loading and Batching |
 | **P3: Training** | `main.ipynb` (train\_enhanced\_forecasting\_models) | `models`, `data_loaders` | `trainers` (Trained Model Instances) | Regime-Aware Loss Weighting, Gradient Accumulation, Gradient Clipping, Early Stopping, XGBoost Fitting |
-| **P4: Evaluation** | `UnifiedModelEvaluator` (`evaluator.ipynb`) | `trainers`, `data_loaders['test']` | `evaluation_results` | Direction Accuracy, Sharpe Ratio, Prediction Correlation, Performance Gap during Stress Periods |
-| **P5: XAI Analysis** | `perform_enhanced_xai_analysis` (`symbolic_xai.ipynb`, `xai_analyzer.ipynb`) | `evaluation_results`, `data_loaders['test']` | `xai_results` | Transparency/Fairness Score, Tikanga Māori Assessment, Symbolic Regression Equation (RQ6), Counterfactuals |
+| **P4: Evaluation** | `UnifiedModelEvaluator` (`evaluator.py`) | `trainers`, `data_loaders['test']` | `evaluation_results` | Direction Accuracy, Sharpe Ratio, Prediction Correlation, Performance Gap during Stress Periods |
+| **P5: XAI Analysis** | `perform_enhanced_xai_analysis` (`symbolic_xai.py`, `xai_analyzer.py`) | `evaluation_results`, `data_loaders['test']` | `xai_results` | Transparency/Fairness Score, Tikanga Māori Assessment, Symbolic Regression Equation (RQ6), Counterfactuals |
 | **P6: Comparative Analysis** | `perform_comparative_analysis`, `address_enhanced_research_questions` | `evaluation_results`, `xai_results`, `coverage_info` | Console Output (RQ Analysis Summary, Metrics Table) | Comparison of Accuracy vs. Interpretability, Regulatory Alignment Check, Stress Performance Ranking |
-| **P7: Forecasting** | `generate_confidence_boosted_forecast` (`ensemble_model.ipynb`) | Current Price (Live/Historical), Historical Features, `ensemble_models` | `forecast_results` (6M/1M Return/Price, Calibrated Confidence, Risk Factors) | Ensemble Weighting, Confidence Calibration (Agreement, Volatility), Risk Assessment |
+| **P7: Forecasting** | `generate_confidence_boosted_forecast` (`ensemble_model.py`) | Current Price (Live/Historical), Historical Features, `ensemble_models` | `forecast_results` (6M/1M Return/Price, Calibrated Confidence, Risk Factors) | Ensemble Weighting, Confidence Calibration (Agreement, Volatility), Risk Assessment |
 | **P8: Reporting & Output** | `save_enhanced_final_results`, `generate_xai_visualizations` | All Analysis Results | `enhanced_final_results.json`, `enhanced_forecasting_comparison.csv`, XAI Visualizations (`.png`) | Serialization, Plotting (Radar Charts, Feature Importance), Final Execution Summary |
 
 ### 1.2. System Architecture / System Overview
@@ -42,12 +42,12 @@ This diagram outlines the core components, modules, and their interactions, high
 
 | Component | Modules/Classes | Key Functionality |
 | :--- | :--- | :--- |
-| **Data Layer** | `DataConfig` (`config.ipynb`), `FinancialDataPipeline` (`data_pipeline.ipynb`) | Fetches/Cleans NZX 50 and global data, engineers features (volatility, illiquidity, regime), creates balanced, leakage-free time-series sequences. |
-| **Model Layer** | `AdvancedModelFactory`, `EnhancedMultiHorizonTransformer` (`model_architectures.ipynb`) | Instantiates sequence models (Transformer/LSTM) for multi-horizon forecasting, and tree-based/linear baselines. Handles model initialization and complexity tracking. |
-| **Training Layer** | `AdvancedRegimeAwareTrainer` (`evaluator.ipynb`) | Handles model training with a focus on stability and robustness: **adaptive stress-period weighting**, gradient accumulation, learning rate scheduling. |
-| **Evaluation Layer** | `UnifiedModelEvaluator` (`evaluator.ipynb`) | Comprehensive performance assessment: MSE, Sharpe Ratio, **Direction Accuracy**, and dedicated **Enhanced Stress Analysis** to measure robustness. |
-| **XAI & Interpretability Layer** | `EnhancedXAIAnalysis`, `SymbolicMarketRegressor` (`symbolic_xai.ipynb`), `XAIAnalyzer` (`xai_analyzer.ipynb`) | Generates human-readable explanations: **Symbolic Regression** (RQ6) to find mathematical rules, **Ethical Assessment (Tikanga Māori principles)**, SHAP analysis, and counterfactuals. |
-| **Forecasting & Ensemble Layer** | `generate_confidence_boosted_forecast` (`ensemble_model.ipynb`) | Generates the final 6-month and 1-month forecasts, prioritizes a **Confidence-Boosted Ensemble** prediction, and performs real-time volatility-based risk assessment. |
+| **Data Layer** | `DataConfig` (`config.py`), `FinancialDataPipeline` (`data_pipeline.py`) | Fetches/Cleans NZX 50 and global data, engineers features (volatility, illiquidity, regime), creates balanced, leakage-free time-series sequences. |
+| **Model Layer** | `AdvancedModelFactory`, `EnhancedMultiHorizonTransformer` (`model_architectures.py`) | Instantiates sequence models (Transformer/LSTM) for multi-horizon forecasting, and tree-based/linear baselines. Handles model initialization and complexity tracking. |
+| **Training Layer** | `AdvancedRegimeAwareTrainer` (`evaluator.py`) | Handles model training with a focus on stability and robustness: **adaptive stress-period weighting**, gradient accumulation, learning rate scheduling. |
+| **Evaluation Layer** | `UnifiedModelEvaluator` (`evaluator.py`) | Comprehensive performance assessment: MSE, Sharpe Ratio, **Direction Accuracy**, and dedicated **Enhanced Stress Analysis** to measure robustness. |
+| **XAI & Interpretability Layer** | `EnhancedXAIAnalysis`, `SymbolicMarketRegressor` (`symbolic_xai.py`), `XAIAnalyzer` (`xai_analyzer.py`) | Generates human-readable explanations: **Symbolic Regression** (RQ6) to find mathematical rules, **Ethical Assessment (Tikanga Māori principles)**, SHAP analysis, and counterfactuals. |
+| **Forecasting & Ensemble Layer** | `generate_confidence_boosted_forecast` (`ensemble_model.py`) | Generates the final 6-month and 1-month forecasts, prioritizes a **Confidence-Boosted Ensemble** prediction, and performs real-time volatility-based risk assessment. |
 
 -----
 
@@ -146,14 +146,14 @@ The application is configured to automatically detect and use CUDA (or MPS on Ap
 ```
 .
 ├── main.ipynb                   # Main execution script and pipeline orchestration
-├── config.ipynb                 # Configuration settings (data, training, XAI, models)
-├── data_pipeline.ipynb          # Data fetching, feature engineering, and DataLoader creation
-├── model_architectures.ipynb    # Definitions for Transformer, LSTM, Linear, XGBoost models
-├── evaluator.ipynb              # Advanced training (Trainer) and model evaluation (Evaluator) with stress analysis
-├── performance_optimizer.ipynb  # Hyperparameter optimization and ensemble weight tuning
-├── xai_analyzer.ipynb           # Core XAI logic, SHAP, attention analysis, ethical assessment
-├── symbolic_xai.ipynb           # Symbolic Regression implementation and Neural/Symbolic comparison (RQ6)
-├── ensemble_model.ipynb         # Confidence-Boosted Ensemble logic
+├── config.py                 # Configuration settings (data, training, XAI, models)
+├── data_pipeline.py          # Data fetching, feature engineering, and DataLoader creation
+├── model_architectures.py    # Definitions for Transformer, LSTM, Linear, XGBoost models
+├── evaluator.py              # Advanced training (Trainer) and model evaluation (Evaluator) with stress analysis
+├── performance_optimizer.py  # Hyperparameter optimization and ensemble weight tuning
+├── xai_analyzer.py           # Core XAI logic, SHAP, attention analysis, ethical assessment
+├── symbolic_xai.py           # Symbolic Regression implementation and Neural/Symbolic comparison (RQ6)
+├── ensemble_model.py         # Confidence-Boosted Ensemble logic
 ├── requirements.txt             # List of all Python dependencies
 ├── logs/                        # Output directory for training logs and checkpoints
 ├── saved_models/                # Output directory for best model files (.pth)
