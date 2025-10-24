@@ -1,0 +1,28 @@
+# NZX 50 Forecasting Pipeline Dependencies
+# Ray Marange - 09 October 2025
+# Enhanced version with robust XAI and performance optimization
+
+# Core dependencies
+torch>=2.0.0
+pandas>=2.0.0
+numpy>=1.24.0
+xgboost>=2.0.0
+scikit-learn>=1.3.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Explainable AI
+shap>=0.42.0
+
+# Mathematical computations
+sympy>=1.12
+
+# Data fetching and preprocessing
+yfinance>=0.2.28
+ta>=0.11.0
+
+# Additional utilities
+joblib>=1.3.0
+tqdm>=4.66.0
