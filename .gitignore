@@ -63,3 +63,9 @@ outputs/
 results/
 plots/
 figures/
+
+# Test files
+test_basic.py
+
+# Generated images from pipeline
+*.png

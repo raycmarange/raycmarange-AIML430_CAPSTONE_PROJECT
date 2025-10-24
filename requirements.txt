@@ -3,7 +3,7 @@
 # Enhanced version with robust XAI and performance optimization
 
 # Core dependencies
-torch>=2.0.0
+torch>=2.6.0
 pandas>=2.0.0
 numpy>=1.24.0
 xgboost>=2.0.0
