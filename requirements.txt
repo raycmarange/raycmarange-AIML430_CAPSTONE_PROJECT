@@ -1,0 +1,40 @@
+# =======================================================
+# AIML430: Enhanced NZX 50 Forecasting Dependencies
+# =======================================================
+
+# -------------------------------------------------------
+# 1. CORE MACHINE LEARNING & DATA HANDLING
+# Includes all essential libraries for data science,
+# deep learning model training, and utilities.
+# -------------------------------------------------------
+torch>=2.0.0
+pandas>=1.5.0
+numpy>=1.21.0
+sklearn>=1.2.0
+scipy>=1.9.0
+
+# -------------------------------------------------------
+# 2. MARKET DATA ACQUISITION
+# Financial data fetching utility.
+# -------------------------------------------------------
+yfinance>=0.2.0
+
+# -------------------------------------------------------
+# 3. EXPLAINABLE AI (XAI) & INTERPRETATION
+# Includes packages for model explanation (SHAP, Interpret)
+# and Symbolic Regression (gplearn).
+# -------------------------------------------------------
+shap>=0.42.0
+interpret>=0.4.0
+gplearn==0.4.2
+sympy>=1.10
+
+# -------------------------------------------------------
+# 4. VISUALIZATION & UTILITIES
+# Libraries for plotting, progress bars, and interactive notebooks.
+# -------------------------------------------------------
+matplotlib>=3.5.0
+seaborn>=0.12.0
+plotly>=5.10.0
+tqdm>=4.64.0
+ipywidgets>=8.0.0
